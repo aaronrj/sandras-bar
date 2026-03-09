@@ -1,7 +1,32 @@
+/**
+ * database.js
+ * -------------------------------------------------------
+ * Módulo encargado de gestionar la base de datos SQLite
+ * de la aplicación Sandra's Bar.
+ *
+ * Contiene:
+ * - Inicialización de la base de datos
+ * - Creación de tablas
+ * - Funciones CRUD para ingresos, gastos y proveedores
+ * - Consultas para estadísticas y resúmenes mensuales
+ *
+ * La base de datos se almacena localmente en el dispositivo
+ * móvil utilizando expo-sqlite.
+ */
 import * as SQLite from 'expo-sqlite';
 
 const db = SQLite.openDatabaseSync('sandras_bar_v2.db');
 
+/**
+ * Inicializa la base de datos SQLite.
+ *
+ * Crea las tablas necesarias si no existen:
+ * - proveedores
+ * - gastos
+ * - ingresos
+ *
+ * Esta función se ejecuta al iniciar la aplicación.
+ */
 export function initDB() {
   console.log('Iniciando DB...');
 
@@ -37,10 +62,25 @@ export function initDB() {
 }
 
 // ── PROVEEDORES ───────────────────────────────────────────────────────────────
+
+/**
+ * Obtiene todos los proveedores almacenados en la base
+ * de datos ordenados por nombre.
+ *
+ * @returns {Array} Lista de proveedores
+ */
 export function getProveedores() {
   return db.getAllSync('SELECT * FROM proveedores ORDER BY nombre');
 }
 
+/**
+ * Inserta un nuevo proveedor en la base de datos.
+ *
+ * @param {string} nombre - Nombre del proveedor
+ * @param {string} categoria - Categoría del proveedor
+ * @param {string} telefono - Teléfono de contacto
+ * @param {string} notas - Información adicional
+ */
 export function addProveedor(nombre, categoria, telefono, notas) {
   return db.runSync(
     'INSERT INTO proveedores (nombre, categoria, telefono, notas) VALUES (?,?,?,?)',
@@ -71,7 +111,14 @@ export function getGastos(mes) {
     [first, last]
   );
 }
-
+/**
+ * Registra un nuevo gasto en la base de datos.
+ *
+ * @param {string} fecha - Fecha del gasto
+ * @param {number|null} proveedor_id - ID del proveedor
+ * @param {string} concepto - Descripción del gasto
+ * @param {number} cantidad - Cantidad gastada
+ */
 export function addGasto(fecha, proveedor_id, concepto, cantidad) {
   db.runSync(
     'INSERT INTO gastos (fecha, proveedor_id, concepto, cantidad) VALUES (?,?,?,?)',
@@ -91,6 +138,12 @@ export function deleteGasto(id) {
 }
 
 // ── INGRESOS ──────────────────────────────────────────────────────────────────
+/**
+ * Obtiene los ingresos registrados para un mes concreto.
+ *
+ * @param {string} mes - Mes en formato YYYY-MM
+ * @returns {Array} Lista de ingresos del mes
+ */
 export function getIngresos(mes) {
   const [first, last] = rangoMes(mes);
   return db.getAllSync(
@@ -98,7 +151,16 @@ export function getIngresos(mes) {
     [first, last]
   );
 }
-
+/**
+ * Guarda o actualiza el ingreso de un día concreto.
+ *
+ * Si ya existe un ingreso para esa fecha se actualiza,
+ * en caso contrario se crea uno nuevo.
+ *
+ * @param {string} fecha - Fecha del ingreso (YYYY-MM-DD)
+ * @param {number} total - Total de caja del día
+ * @param {string} notas - Notas opcionales
+ */
 export function saveIngreso(fecha, total, notas) {
   db.runSync(
     'INSERT INTO ingresos (fecha, total, notas) VALUES (?,?,?) ON CONFLICT(fecha) DO UPDATE SET total=excluded.total, notas=excluded.notas',
