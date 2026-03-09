@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "Sandra's Bar",
+    "slug": "sandras-bar",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "dark",
+    "android": {
+      "package": "com.aaron.sandrasbar"
+    },
+    "plugins": [
+      "expo-sqlite"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "785f20fe-4a8a-433d-bfb2-1cbf088411f9"
+      }
+    }
+  }
+}
