@@ -1,50 +1,186 @@
-# Welcome to your Expo app 👋
+# 🍸 Sandra's Bar
+### Mobile Bar Management App
+> Proof of Concept (PoC) – Bar Management Application
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+**Sandra's Bar** es una aplicación móvil desarrollada con **React Native** y **Expo** para gestionar fácilmente la economía diaria de un bar.
 
-## Get started
+Permite registrar ingresos diarios (caja), gastos y proveedores, además de visualizar un resumen mensual del negocio.
 
-1. Install dependencies
+Este proyecto representa una primera versión funcional (MVP) creada para simplificar la gestión financiera de pequeños negocios familiares.
 
-   ```bash
-   npm install
-   ```
+---
 
-2. Start the app
+## 🚀 Tecnologías Utilizadas
 
-   ```bash
-   npx expo start
-   ```
+- React Native
+- Expo
+- JavaScript
+- SQLite (`expo-sqlite`)
+- EAS Build
+- Node.js
 
-In the output, you'll find options to open the app in a
+---
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+## 🏗 Arquitectura
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+El proyecto sigue una arquitectura modular simple:
+```
+Screens → Database Layer → SQLite
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+### Screens
+Contienen las pantallas de la aplicación:
+- `DashboardScreen`
+- `IngresosScreen`
+- `GastosScreen`
+- `ProveedoresScreen`
 
-## Learn more
+### Database Layer
+Archivo central: **`database.js`**
 
-To learn more about developing your project with Expo, look at the following resources:
+Contiene:
+- Inicialización de base de datos
+- Queries SQL
+- Lógica de acceso a datos
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### SQLite
+Base de datos local almacenada directamente en el dispositivo móvil.
 
-## Join the community
+Esto permite:
+- ✅ Funcionamiento offline
+- ✅ Almacenamiento persistente
+- ✅ Mayor simplicidad (sin backend)
 
-Join our community of developers creating universal apps.
+---
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## 📱 Funcionalidades
+
+### 💰 Caja diaria
+Registro de ingresos diarios del bar. Permite:
+- Añadir caja del día
+- Editar ingresos
+- Añadir notas
+- Visualizar total mensual
+
+### 💸 Gestión de gastos
+Registro de gastos asociados al negocio. Ejemplos:
+- Proveedor de bebidas
+- Panadería
+- Limpieza
+- Mantenimiento
+
+### 🏢 Gestión de proveedores
+Permite gestionar proveedores del bar:
+- Añadir proveedor
+- Editar proveedor
+- Eliminar proveedor
+- Visualizar gasto mensual por proveedor
+
+### 📊 Dashboard (Resumen del negocio)
+Pantalla principal con indicadores clave:
+- Ingresos del mes
+- Gastos del mes
+- Beneficio neto
+- Evolución de ingresos y gastos
+
+---
+
+## 💾 Base de Datos
+
+La aplicación utiliza **SQLite local**.
+
+**Tablas principales:**
+| Tabla | Descripción |
+|---|---|
+| `proveedores` | Gestión de proveedores |
+| `gastos` | Registro de gastos |
+| `ingresos` | Registro de ingresos diarios |
+
+**Ventajas:**
+- No requiere conexión a internet
+- Datos almacenados localmente
+- Alta velocidad de acceso
+
+---
+
+## 🐳 Ejecución del Proyecto (Desarrollo)
+
+**1. Clonar repositorio:**
+```bash
+git clone https://github.com/aaronrj/sandras-bar.git
+cd sandras-bar
+```
+
+**2. Instalar dependencias:**
+```bash
+npm install
+```
+
+**3. Ejecutar aplicación:**
+```bash
+npx expo start
+```
+
+> Abrir la app en el móvil usando **Expo Go**.
+
+---
+
+## 📦 Generar APK
+
+Para generar el APK instalable:
+```bash
+eas build --platform android --profile preview
+```
+
+> Expo generará un enlace para descargar el APK instalable en Android.
+
+---
+
+## 📂 Estructura del Proyecto
+```
+sandras-bar/
+│
+├── screens/
+│   ├── DashboardScreen.js
+│   ├── IngresosScreen.js
+│   ├── GastosScreen.js
+│   └── ProveedoresScreen.js
+│
+├── assets/
+│
+├── database.js
+├── App.js
+├── app.json
+├── package.json
+└── README.md
+```
+
+---
+
+## 🎯 Objetivo del Proyecto
+
+Crear una herramienta simple para gestionar las cuentas de un bar **sin necesidad de usar ordenador ni software complejo**.
+
+La aplicación está diseñada para ser utilizada directamente desde el móvil por personas sin conocimientos técnicos.
+
+---
+
+## 🔮 Próximas Mejoras
+
+- [ ] Exportación de datos
+- [ ] Backup automático
+- [ ] Autenticación de usuarios
+- [ ] Estadísticas avanzadas
+- [ ] Gráficos mejorados
+
+---
+
+## 👨‍💻 Autor
+
+**Aarón Rodríguez Jiménez**
+
+Proyecto desarrollado como aplicación práctica para la gestión interna de Sandra's Bar.
+
+---
+
+> Version: 1.0.0
